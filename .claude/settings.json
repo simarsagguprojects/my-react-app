@@ -56,7 +56,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/simarsaggu/PycharmProjects/my-react-app/.claude/hooks/user-prompt-guard.sh",
+            "command": "/Users/simarsaggu/PycharmProjects/my-react-app/.claude/hooks/user-prompt-guard.sh"
           }
         ]
       }
