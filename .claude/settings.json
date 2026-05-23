@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "alwaysThinkingEnabled": true,
+  "showThinkingSummaries": true,
+  "permissions": {
+    "allow": [
+      "Bash(cd terraform && terraform init*)",
+      "Bash(cd terraform && terraform plan*)",
+      "Bash(cd terraform && terraform output*)",
+      "Bash(cd terraform && terraform show*)",
+      "Bash(cd terraform && terraform fmt*)",
+      "Bash(cd terraform && terraform validate*)",
+      "Bash(aws s3 ls*)",
+      "Bash(aws cloudfront get-distribution*)",
+      "Bash(aws sts get-caller-identity)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(aws iam *)",
+      "Bash(curl *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(aws s3 rm *)",
+      "Bash(aws s3 rb *)",
+      "Bash(aws cloudfront delete-*)"
+
+    ]
+  },
+  "env": {
+    "AWS_REGION": "ap-south-1"
+  },
+  "allowedMcpServers" : [{ "serverName": "aws-account-access-mcp" },{ "serverName": "terraform-doc-mcp" } ],
+  "defaultShell": "bash",
+  "enabledMcpjsonServers": ["aws-account-access-mcp", "terraform-doc-mcp" ],
+  "respectGitignore": true,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/statusline.sh",
+    "padding": 2
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/post-tool-logger.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/user-prompt-guard.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "aws-account-access-mcp": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-api-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_REGION": "ap-south-1"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "terraform-doc-mcp": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v", "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/terraform:/workspace",
+        "-w", "/workspace",
+        "hashicorp/terraform-mcp-server"
+      ]
+    }
+  }
+}
