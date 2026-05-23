@@ -34,5 +34,5 @@ Create output variables: cloudfront_distribution_id, cloudfront_domain_name, s3_
 Create variables: AppName(`claude-react-app`),Env(`Prod`), Region(`ap-south-1`)
 
 ## providers.tf
-1. Create this file with required provider, choose source as AWS and required_version >= 1.5. 
+1. Create this file with required provider, choose source as AWS and required_version >= 1.1. 
 2. Create Region variable with `ap-south-1`.

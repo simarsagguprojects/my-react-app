@@ -4,7 +4,7 @@ description: This skill is used to create or update terraform files in `terrafor
 allowed-tools: Read, Write,Grep, Glob
 disable-model-invocation: true
 ---
-Create terraform files in `terraform/` by referring the `template-spec.md` from current skill directory.
+Create terraform files in `my-react-app/terraform/` by referring the `template-spec.md` from current skill directory.
 
 # Actions to take
 Create `main.tf`,`outputs.tf`,`inputs.tf`, `variables.tf`, `providers.tf` in `terraform/` and referring specifications from `template-spec.md`
