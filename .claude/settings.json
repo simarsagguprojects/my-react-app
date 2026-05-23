@@ -35,7 +35,7 @@
   "respectGitignore": true,
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/scripts/statusline.sh",
+    "command": "~/my-react-app/.claude/scripts/statusline.sh",
     "padding": 2
   },
   "hooks": {
@@ -45,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/post-tool-logger.sh"
+            "command": "~/my-react-app/.claude/hooks/post-tool-logger.sh"
           }
         ]
       }
