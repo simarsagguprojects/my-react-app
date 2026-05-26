@@ -50,8 +50,10 @@ This project `my-react-app/` is a React application, hosted on an AWS environmen
 6. Do not include .git, .gitignore or venv files.
 7. Prevent deletion of AWS resources created from `/terraform` folder.
 8. In CloudFront, use a REST API endpoint as the origin, and restrict access with an origin access control (OAC)
-9. Prevent & warn any user from committing `settings.local.json` file to this repository.
-10. Allowed services to be created and used are AWS S3, Amazon Cloudfront, IAM role via Terraform.
-11. Warn on updates to`package.json`. 
+9. Prevent & warn any user from committing `~/.claude/settings.local.json` file to this repository.
+10. Prevent any agent to update `~/.claude/settings.json`, block this action 
+11. Prevent any agent to update `~/my-react-app/.claude/hooks`, block this action
+12. Allowed services to be created and used are AWS S3, Amazon Cloudfront, IAM role via Terraform.
+13. Warn on updates to`package.json`. 
 
 
