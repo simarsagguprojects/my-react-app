@@ -3,6 +3,7 @@ name: setup-gh-actions
 description: This skill allows you to create/validate GitHub Actions workflow
 allowed-tools: Read, Grep, Glob, Write
 disable-model-invocation: true
+
 ---
 
 This skill creates and validates the GitHub Actions workflow in `.github/workflows`
