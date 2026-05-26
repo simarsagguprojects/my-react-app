@@ -47,13 +47,14 @@ This project `my-react-app/` is a React application, hosted on an AWS environmen
 3. Name AWS OIDC provider role name as `github-actions-deploy`.
 4. `github-actions-deploy` role should only have access to read and put access on `react-app-bucket` bucket and invalidate cache access for CloudFront.
 5. Do not allow any other user than the current user to edit `.claude/`, `.mcp.json`, `claude.md`, `settings.json`.
-6. Do not include .git, .gitignore or venv files.
-7. Prevent deletion of AWS resources created from `/terraform` folder.
-8. In CloudFront, use a REST API endpoint as the origin, and restrict access with an origin access control (OAC)
-9. Prevent & warn any user from committing `~/.claude/settings.local.json` file to this repository.
-10. Prevent any agent to update `~/.claude/settings.json`, block this action 
-11. Prevent any agent to update `~/my-react-app/.claude/hooks`, block this action
-12. Allowed services to be created and used are AWS S3, Amazon Cloudfront, IAM role via Terraform.
-13. Warn on updates to`package.json`. 
+6. Do not allow any agent to edit `.claude/`, `.mcp.json`, `claude.md`.
+7. Do not include .git, .gitignore or venv files.
+8. Prevent deletion of AWS resources created from `/terraform` folder.
+9. In CloudFront, use a REST API endpoint as the origin, and restrict access with an origin access control (OAC)
+10. Prevent & warn any user from committing `~/.claude/settings.local.json` file to this repository.
+11. Prevent any agent to update `~/.claude/settings.json`, block this action 
+12. Prevent any agent to update `~/my-react-app/.claude/hooks`, block this action
+13. Allowed services to be created and used are AWS S3, Amazon Cloudfront, IAM role via Terraform.
+14. Warn on updates to`package.json`. 
 
 
