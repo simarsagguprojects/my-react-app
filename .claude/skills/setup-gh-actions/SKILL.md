@@ -20,9 +20,8 @@ This skill creates and validates the GitHub Actions workflow in `.github/workflo
 5. Check if `./build ` exists locally.
 6. Assume `github-actions-deploy` AWS OIDC provider role to run AWS commands.
 7. Upload to S3 : aws s3 sync ./build s3://react-app-bucket --delete
-8. Invalidate cache for `react-app-cdn` CloudFront CDN.
-9. Send email notifications to me on failure of the workflow.
-10. Raise if any of the above step fails.
+8. Invalidate cache for `react-app-cdn` CloudFront CDN. 
+9. Raise if any of the above step fails.
 
 # Post-action verification
 [] Validate syntax of this workflow.
