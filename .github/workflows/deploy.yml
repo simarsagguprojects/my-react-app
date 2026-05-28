@@ -9,38 +9,50 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build-test-deploy:
+    name: Build, Test & Deploy to AWS
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: my-react-app
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Docker
+        run: |
+          docker --version
+          docker info
+
       - name: Build Docker image (builder stage)
-        working-directory: my-react-app
         run: docker build --target builder -t react-app-builder .
 
-      - name: Run builder container (npm ci + npm run build)
-        working-directory: my-react-app
+      - name: Run unit tests in Docker
+        run: docker run --name react-container react-app-builder sh -c "npm ci && npm test -- --watchAll=false --ci"
+
+      - name: Remove test container
+        if: always()
+        run: docker rm react-container || true
+
+      - name: Run builder container
         run: docker run --name react-container react-app-builder sh -c "npm ci && npm run build"
 
       - name: Copy build folder out of container
-        working-directory: my-react-app
         run: docker cp react-container:/app/build ./build
 
       - name: Remove build container
-        working-directory: my-react-app
         if: always()
         run: docker rm react-container || true
 
       - name: Verify build folder exists
-        working-directory: my-react-app
         run: |
           if [ ! -d "./build" ]; then
-            echo "ERROR: ./build directory does not exist. Build may have failed."
+            echo "ERROR: ./build directory does not exist after Docker copy step."
             exit 1
           fi
-          echo "Build folder verified: $(ls ./build)"
+          echo "Build folder verified:"
+          ls ./build
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
@@ -50,7 +62,6 @@ jobs:
           role-session-name: github-actions-deploy-session
 
       - name: Upload build to S3
-        working-directory: my-react-app
         run: aws s3 sync ./build s3://react-app-bucket --delete
 
       - name: Invalidate CloudFront cache
@@ -58,23 +69,3 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
-
-      - name: Send failure email notification
-        if: failure()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.MAIL_SMTP_SERVER }}
-          server_port: ${{ secrets.MAIL_SMTP_PORT }}
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "FAILED: React App Deployment — ${{ github.repository }} @ ${{ github.sha }}"
-          to: ${{ secrets.MAIL_RECIPIENT }}
-          from: GitHub Actions <${{ secrets.MAIL_USERNAME }}>
-          body: |
-            Deployment workflow FAILED for repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Triggered by: ${{ github.actor }}
-            Run URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-            Please review the logs and resolve the issue.
