@@ -12,3 +12,16 @@ yarn-error.log*
 .DS_Store
 *.log
 *.swp
+# Terraform state files - never commit these (contain sensitive infrastructure data)
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
+
+# Terraform working directory
+terraform/.terraform/
+
+# Python virtual environment
+venv/
+settings.local.json
+.claude/agent-memory/
