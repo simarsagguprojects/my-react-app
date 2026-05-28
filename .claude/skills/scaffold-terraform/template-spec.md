@@ -19,7 +19,7 @@ Tag following resources with AppName as `claude-react-app` and Env as `Prod`
    3. choose AES256 bucket encryption. 
 3. Create a CloudFront distribution `react-app-cdn` with following configuration
    1. Choose the "Web" distribution method.
-   2. Choose "main.html" as root object.
+   2. Choose "index.html" as root object.
    3. Choose `react-app-bucket-956651462310` bucket as Origin Domain Name.
    4. Choose Price class: PriceClass_200.
    5. Set Viewer Protocol Policy: Choose HTTPS.
