@@ -11,7 +11,7 @@ This skill creates, validates and updates the GitHub Actions workflow in `.githu
 
 If $ARGUMENTS contains "create", generate the complete workflow file.
 If $ARGUMENTS contains "validate", only validate the existing file.
-If $ARGUMENTS contains "update", update the workflow if this file has updated.
+If $ARGUMENTS contains "update", update the workflow according to actions defined in this file.
 
 # Action to take
 1. Create a `deploy.yml` workflow that automatically invokes on push to `main` branch of this repository if not created.
