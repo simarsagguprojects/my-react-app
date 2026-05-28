@@ -4,7 +4,7 @@ Create all the files mentioned below in `/terraform` folder with mentioned confi
 
 ## main.tf
 Tag following resources with AppName as `claude-react-app` and Env as `Prod`
-1. Create a`react-app-bucket` s3 bucket with following configuration
+1. Create a`react-app-bucket-956651462310` s3 bucket with following configuration
    1. allow public access.
    2. put bucket policy to only allow get object to all and allow all read actions to SmartSimar user and explicit deny rest of the actions.
    3. Bucket policy should allow OIDC provider created role `github-actions-deploy` to read and write to the bucket.
@@ -20,7 +20,7 @@ Tag following resources with AppName as `claude-react-app` and Env as `Prod`
 3. Create a CloudFront distribution `react-app-cdn` with following configuration
    1. Choose the "Web" distribution method.
    2. Choose "main.html" as root object.
-   3. Choose `react-app-bucket` bucket as Origin Domain Name.
+   3. Choose `react-app-bucket-956651462310` bucket as Origin Domain Name.
    4. Choose Price class: PriceClass_200.
    5. Set Viewer Protocol Policy: Choose HTTPS.
    6. Default settings for Cache Behaviour settings.

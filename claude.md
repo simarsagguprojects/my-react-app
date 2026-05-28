@@ -16,8 +16,8 @@ This project `my-react-app/` is a React application, hosted on an AWS environmen
 
 1. Use Terraform files from `terraform/` to create AWS S3 buckets and CloudFront resources.
 2. SmartSimarRole will be assumed and will be used to create AWS resources.
-3. Create two general purpose s3 buckets `react-app-bucket` and `react-app-bucket-access-logs` if not already exists.
-4. Configure`react-app-bucket` bucket
+3. Create two general purpose s3 buckets `react-app-bucket-956651462310` and `react-app-bucket-access-logs` if not already exists.
+4. Configure`react-app-bucket-956651462310` bucket
    1. allow public access.
    2. put bucket policy to only allow get object to all and allow all read actions to SmartSimar user and explicit deny rest of the actions.
    3. Bucket policy should allow OIDC provider created role `github-actions-deploy` to read and write to the bucket.
@@ -30,14 +30,14 @@ This project `my-react-app/` is a React application, hosted on an AWS environmen
    2. Put bucket policy to only allow get object to only root user have full access to this bucket. 
    3. enable bucket versioning 
    4. choose AES256 bucket encryption.
-6. Create CloudFront `react-app-cdn`and link it to `react-app-bucket` Amazon S3 bucket we created.
+6. Create CloudFront `react-app-cdn`and link it to `react-app-bucket-956651462310` Amazon S3 bucket we created.
 
 # CI/CD pipeline
 1. A GitHub Actions pipeline will assume AWS OIDC provider role to deploy the application to AWS S3.
 2. Deploys to AWS on any changes pushed or merged to main branch of this repository.
 3. Then create the docker image and run the container with build command:`npm ci` will install dependencies and `npm run build` will create a `build/` folder.
 4. The unit test cases from `src/tests/App.test.js` should always pass.
-5. This `build/` folder should be copied to `react-app-bucket` S3 bucket.
+5. This `build/` folder should be copied to `react-app-bucket-956651462310` S3 bucket.
 6. Invalidate CloudFront cache to serve updated website everytime.
 
 
@@ -45,7 +45,7 @@ This project `my-react-app/` is a React application, hosted on an AWS environmen
 1. Do not allow pipeline to auto-trigger from any other branch than `main`.
 2. Ensure no secrets or AWS keys or Tokens are stored in this repository.
 3. Name AWS OIDC provider role name as `github-actions-deploy`.
-4. `github-actions-deploy` role should only have access to read and put access on `react-app-bucket` bucket and invalidate cache access for CloudFront.
+4. `github-actions-deploy` role should only have access to read and put access on `react-app-bucket-956651462310` bucket and invalidate cache access for CloudFront.
 5. Do not allow any other user than the current user to edit `.claude/`, `.mcp.json`, `claude.md`, `settings.json`.
 6. Do not allow any agent to edit `.claude/`, `.mcp.json`, `claude.md`.
 7. Do not include .git, .gitignore or venv files.

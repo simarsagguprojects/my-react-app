@@ -58,7 +58,7 @@ jobs:
           role-session-name: github-actions-deploy-session
 
       - name: Upload build to S3
-        run: aws s3 sync ./build s3://react-app-bucket --delete
+        run: aws s3 sync ./build s3://react-app-bucket-${{ secrets.AWS_ACCOUNT_ID }} --delete
 
       - name: Invalidate CloudFront cache
         run: |
