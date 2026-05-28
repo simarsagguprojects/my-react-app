@@ -36,4 +36,4 @@ If $ARGUMENTS contains "update", update the workflow according to actions define
 [] Ensure that `/build` folder exists in `react-app-bucket` S3 bucket.
 [] Raise an Error if any of the resource is in FAILED/ERROR state.
 [] Recommend secure practises for this workflow.
-[] Make sure requirements defined in this file match with `deploy.yml`
+[] Make sure `deploy.yml` defined steps match with this file. 
