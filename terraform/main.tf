@@ -235,7 +235,7 @@ resource "aws_cloudfront_origin_access_control" "react_app" {
 
 resource "aws_cloudfront_distribution" "react_app_cdn" {
   comment             = "react-app-cdn"
-  default_root_object = "main.html"
+  default_root_object = "index.html"
   enabled             = true
   price_class         = "PriceClass_200"
   tags                = local.common_tags
@@ -259,6 +259,20 @@ resource "aws_cloudfront_distribution" "react_app_cdn" {
         forward = "none"
       }
     }
+  }
+
+  custom_error_response {
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
+  }
+
+  custom_error_response {
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
   }
 
   restrictions {
