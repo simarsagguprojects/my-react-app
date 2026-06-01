@@ -49,6 +49,15 @@
             "command": "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.claude/hooks/command-validator.sh"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.claude/hooks/file-protector.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [
