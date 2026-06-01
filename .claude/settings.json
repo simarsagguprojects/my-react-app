@@ -33,12 +33,24 @@
   "defaultShell": "bash",
   "enabledMcpjsonServers": ["aws-account-access-mcp", "terraform-doc-mcp" ],
   "respectGitignore": true,
+  "disableBypassPermissionsMode": "disable",
   "statusLine": {
     "type": "command",
     "command": "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.claude/scripts/statusline.sh",
     "padding": 2
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.claude/hooks/command-validator.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Bash",
