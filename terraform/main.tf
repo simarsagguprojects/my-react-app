@@ -319,7 +319,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:SimarSaggu/react-deployment:ref:refs/heads/main"]
+      values   = ["repo:simarsagguprojects/my-react-app:ref:refs/heads/main"]
     }
 
     condition {
