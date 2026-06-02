@@ -8,6 +8,7 @@ disable-model-invocation: true
 # Action to take
 Make sure you are in `my-react-app` directory 
 Run `terraform apply -auto-approve` to apply the Terraform changes to AWS environment
+Run AWS S3 CLI command to copy `~/terraform/*.tfstate`, `~/terraform/*.tfstate.backup` from `my-react-app` to `react-app-terraform-state-956651462310` bucket.
 
 # Post-action verification
 [] Summarise all the resources created/updated in AWS environment.

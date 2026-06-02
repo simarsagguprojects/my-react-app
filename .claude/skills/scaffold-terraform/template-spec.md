@@ -36,3 +36,10 @@ Create variables: AppName(`claude-react-app`),Env(`Prod`), Region(`ap-south-1`)
 ## providers.tf
 1. Create this file with required provider, choose source as AWS and required_version >= 1.1. 
 2. Create Region variable with `ap-south-1`.
+
+## backend.tf
+Create a `react-app-terraform-state-956651462310` bucket 
+1. block public access. 
+2. Put bucket policy to only allow get object to only root user have full access to this bucket. 
+3. enable bucket versioning 
+4. choose AES256 bucket encryption. 

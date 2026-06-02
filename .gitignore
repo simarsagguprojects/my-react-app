@@ -23,5 +23,7 @@ terraform/.terraform/
 
 # Python virtual environment
 venv/
+# Claude Code local settings — never commit (contains local user config)
+.claude/settings.local.json
 settings.local.json
 .claude/agent-memory/
