@@ -22,7 +22,10 @@
       "Bash(git push *)",
       "Bash(aws s3 rm *)",
       "Bash(aws s3 rb *)",
-      "Bash(aws cloudfront delete-*)"
+      "Bash(aws cloudfront delete-*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/secrets/**)"
 
     ]
   },
