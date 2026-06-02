@@ -101,10 +101,10 @@ resource "aws_s3_bucket" "react_app" {
 resource "aws_s3_bucket_public_access_block" "react_app" {
   bucket = aws_s3_bucket.react_app.id
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket_versioning" "react_app" {
@@ -149,11 +149,18 @@ resource "aws_s3_bucket_policy" "react_app" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "PublicGetObject"
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.react_app.arn}/*"
+        Sid    = "CloudFrontOACAccess"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        }
+        Action   = "s3:GetObject"
+        Resource = "${aws_s3_bucket.react_app.arn}/*"
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.react_app_cdn.arn
+          }
+        }
       },
       {
         Sid    = "SmartSimarReadAccess"
@@ -181,7 +188,6 @@ resource "aws_s3_bucket_policy" "react_app" {
         Action = [
           "s3:GetObject",
           "s3:PutObject",
-          "s3:DeleteObject",
           "s3:ListBucket"
         ]
         Resource = [
@@ -313,7 +319,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:*:ref:refs/heads/main"]
+      values   = ["repo:SimarSaggu/react-deployment:ref:refs/heads/main"]
     }
 
     condition {
@@ -337,7 +343,6 @@ data "aws_iam_policy_document" "github_actions_permissions" {
     actions = [
       "s3:GetObject",
       "s3:PutObject",
-      "s3:DeleteObject",
       "s3:ListBucket"
     ]
     resources = [
