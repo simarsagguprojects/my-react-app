@@ -7,7 +7,7 @@ disable-model-invocation: true
 Create terraform files in `my-react-app/terraform/` by referring the `template-spec.md` from current skill directory.
 
 # Actions to take
-Create `main.tf`,`outputs.tf`,`inputs.tf`, `variables.tf`, `providers.tf` in `terraform/` and referring specifications from `template-spec.md`
+Create `main.tf`,`outputs.tf`,`inputs.tf`, `variables.tf`, `providers.tf`, `backend.tf` in `terraform/` and referring specifications from `template-spec.md`
 Ensure there are no syntax errors in these files.
 
 # After action is complete
