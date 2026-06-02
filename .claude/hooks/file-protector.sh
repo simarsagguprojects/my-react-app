@@ -24,15 +24,15 @@ REAL=$(realpath -m "$FILE" 2>/dev/null || echo "$FILE")
 # ── Protected path definitions ────────────────────────────────────────────────
 PROTECTED_DIRS=(
   "$HOME/.claude"
-  "$(pwd)/.claude"
+  "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.claude"
 )
 
 PROTECTED_FILES=(
-  "$(pwd)/.mcp.json"
+  "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/.mcp.json"
   "$HOME/.mcp.json"
-  "$(pwd)/CLAUDE.md"
-  "$(pwd)/claude.md"
-  "$(pwd)/Claude.md"
+  "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/CLAUDE.md"
+  "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/claude.md"
+  "/Users/simarsaggu/PycharmProjects/react-deployment/my-react-app/Claude.md"
 )
 
 # Check directory prefixes
