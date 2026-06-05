@@ -1,181 +1,51 @@
+# React on AWS — with AI Guardrails
 
-# **Deploy a React Application on Ubuntu VM with Nginx**
-
-This guide provides step-by-step instructions to deploy and run a **This React application** on an **Ubuntu VM** using **Nginx**, making it accessible from a **public IP**.
-
----
-
-
-## **1. Install Node.js and npm**  
-Since React requires **Node.js** and **npm**, install them first:  
-
-```sh
-sudo apt update
-sudo apt install -y nodejs npm
-```
-
-Verify the installation:  
-
-```sh
-node -v
-npm -v
-```
+A React app deployed to AWS S3 + CloudFront using Terraform and GitHub Actions.  
+The twist: the entire Claude Code environment was engineered from scratch so an AI could help build and operate it — safely.
 
 ---
 
-## **2. Install Nginx**  
-Update package lists and install **Nginx**:  
+## Stack
 
-```sh
-sudo apt install -y nginx
-```
-
-Start and enable Nginx:  
-
-```sh
-sudo systemctl start nginx
-sudo systemctl enable nginx
-```
-
-Check Nginx status:  
-
-```sh
-systemctl status nginx
-```
+React · Docker · Terraform · AWS S3 · CloudFront · GitHub Actions · Claude Code
 
 ---
 
-## **3. Clone the React Application from GitHub**  
-Navigate to a temporary directory and **clone the repository**:  
+## How it works
 
-```sh
-git clone https://github.com/pravinmishraaws/my-react-app.git
-cd my-react-app
-```
-
-**Open the App.js file**
-
-Navigate to your React app’s source folder:
-
-```sh
-cd my-react-app/src
-```
-
-Open the App.js file in a text editor:
-
-```sh
-nano App.js
-```
-(or use vi/vim if you prefer)
-
-Modify the content
-
-```sh
-<h2>Deployed by: <strong>Your Full Name</strong></h2>
-<p>Date: <strong>DD/MM/YYYY</strong></p>
-```
-
-Update your details like: Your Full Name & Date
+| Layer | What's inside |
+|---|---|
+| **App** | React SPA, Dockerized build, unit tested before every deploy |
+| **Infrastructure** | Terraform — S3 (versioned, encrypted, access-logged) + CloudFront with OAC |
+| **CI/CD** | GitHub Actions, OIDC auth — no stored AWS keys or secrets |
+| **AI Skills** | `/deploy`, `/infra-audit`, `/tf-plan`, `/tf-apply`, `/scaffold-terraform` |
+| **AI Agents** | `security-auditor`, `drift-detector`, `cost-optimizer` — run in parallel |
+| **AI Hooks** | Block `terraform destroy`, `rm -rf`, pipe-to-shell attacks, agent edits to config |
+| **Permissions** | AI can inspect — it cannot delete, push to git, or read secrets |
 
 ---
 
-## **4. Install Dependencies and Build the React App**  
-Install required dependencies:  
+## Project Structure
 
-```sh
-npm install
 ```
-
-Build the React application:  
-
-```sh
-npm run build
-```
-
-This will generate a **`build/`** folder with production-ready static files.
-
----
-
-## **5. Deploy Build Files to Nginx Web Directory**  
-Remove any existing files in the Nginx web directory:  
-
-```sh
-sudo rm -rf /var/www/html/*
-```
-
-Copy the React **build files** to `/var/www/html/`:  
-
-```sh
-sudo cp -r build/* /var/www/html/
-```
-
-Set proper permissions:  
-
-```sh
-sudo chown -R www-data:www-data /var/www/html
-sudo chmod -R 755 /var/www/html
+my-react-app/
+├── src/                  # React components and tests
+├── terraform/            # AWS infrastructure (S3, CloudFront, IAM)
+├── .github/workflows/    # GitHub Actions CI/CD pipeline
+├── .claude/
+│   ├── agents/           # security-auditor, drift-detector, cost-optimizer
+│   ├── skills/           # deploy, infra-audit, tf-plan, tf-apply, scaffold-terraform
+│   ├── hooks/            # command-validator, file-protector, post-tool-logger
+│   └── settings.json     # permissions, hooks, MCP servers
+├── CLAUDE.md             # Project spec — drives all AI decisions
+└── Dockerfile
 ```
 
 ---
 
-## **6. Configure Nginx for React**  
-Nginx configuration file:   
+## Security highlights
 
-```
-echo 'server {
-    listen 80;
-    server_name _;
-    root /var/www/html;
-    index index.html;
-    
-    location / {
-        try_files $uri /index.html;
-    }
-
-    error_page 404 /index.html;
-}' | sudo tee /etc/nginx/sites-available/default > /dev/null
-
-```
-
-Restart Nginx to apply the changes:  
-
-```sh
-sudo systemctl restart nginx
-```
-
----
-
-## **7. Find Your Public IP and Access the Application**  
-Retrieve the **public IP** of your Ubuntu VM:  
-
-```sh
-curl ifconfig.me
-```
-
-Now, students can **access the React application** in a browser using:  
-
-```
-http://<your-public-ip>
-```
-
-For example, if the public IP is **203.0.113.25**, visit:  
-
-```
-http://203.0.113.25
-```
-
----
-
-## **8. Verify the Deployment**  
-Ensure Nginx is correctly serving the React app:  
-
-```sh
-curl <your-public-ip>
-```
-
-If successful, your **React app is live!**  
-
----
-
-## **Your React App is Now Live on Ubuntu with Nginx!**  
-Now your **React application** is deployed on an **Ubuntu VM with Nginx**, accessible from a **public IP**. 
+- CloudFront serves via OAC — S3 bucket is never publicly exposed directly
+- `github-actions-deploy` IAM role scoped to S3 read/write + CloudFront invalidation only
+- OIDC authentication — zero long-lived credentials stored anywhere
+- AI hooks block destructive commands at the shell level before execution
